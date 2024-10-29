@@ -1,101 +1,204 @@
-import Image from "next/image";
+'use client';
+import { useState } from "react";
+import { FaUser, FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
+import PageSkeleton from "@/components/PageSkeleton";
+import { homeData } from "@/modules/HomeData";
+import Bookshelf from "@/components/Bookshelf";
+import Heading from "@/components/Heading";
+import { motion } from "framer-motion";
+
+const accentColor = "#FF3E30";
+const secondaryColor = "#ffc720";
+
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  
+  const getDayWithSuffix = (day: number): string => {
+    if (day > 3 && day < 21) return `${day}th`;
+    switch (day % 10) {
+      case 1:
+        return `${day}st`;
+      case 2:
+        return `${day}nd`;
+      case 3:
+        return `${day}rd`;
+      default:
+        return `${day}th`;
+    }
+  };
+  
+  const dayWithSuffix = getDayWithSuffix(day);
+  const month = date.toLocaleString('default', { month: 'long' });
+  const year = date.getFullYear();
+  return `${dayWithSuffix} ${month}, ${year}`;
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [selectedUpdate, setSelectedUpdate] = useState<any | null>(null);
+  const captionContent = homeData.find((data) => data.type === "caption")?.content;
+  const updates = homeData.find((data) => data.type === "updates")?.updates;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handleReadMore = (update: any) => {
+    setSelectedUpdate(update);
+  };
+
+  const handleBackToHome = () => {
+    setSelectedUpdate(null);
+  };
+
+  return (
+    <PageSkeleton title="">
+      {!selectedUpdate && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Bookshelf />
+        </motion.div>
+      )}
+
+      {selectedUpdate ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.5 }}
+          className="mt-6"
+        >
+          <motion.div
+            className="flex flex-col items-start space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <button
+              className="flex items-center justify-center text-xs font-bold text-white px-3 py-2 rounded-md"
+              style={{ backgroundColor: secondaryColor }}
+              onClick={handleBackToHome}
+            >
+              <FaArrowLeft className="mr-2" />
+              Back to Home
+            </button>
+
+            <Heading text={selectedUpdate.title} color="black" />
+          </motion.div>
+
+          <motion.div
+            className="flex items-center space-x-4 text-gray-600 mb-8 mt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <div className="flex items-center space-x-2">
+              <FaUser className="text-gray-500" />
+              <p>{selectedUpdate.author}</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <FaCalendarAlt className="text-gray-500" />
+              <p>{formatDate(selectedUpdate.datePosted)}</p>
+            </div>
+          </motion.div>
+
+          {selectedUpdate.longDescription.map((section: any, index: number) => (
+            <motion.p
+              key={index}
+              className="mb-6 text-base leading-relaxed"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+            >
+              {section.content}
+            </motion.p>
+          ))}
+        </motion.div>
+      ) : (
+        <>
+          {/* Render caption */}
+          {captionContent && (
+            <motion.div
+              className="text-2xl font-openSans font-normal leading-relaxed text-gray-700 tracking-wide"
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              {captionContent.map((part, index) =>
+                typeof part === "string" ? (
+                  <span key={index}>{part}</span>
+                ) : (
+                  <a
+                    key={index}
+                    href={part.url}
+                    target="_blank"
+                    className="font-bold underline"
+                    style={{
+                      textDecorationColor: secondaryColor,
+                      textUnderlineOffset: "0.25rem",
+                      textDecorationThickness: "0.25rem",
+                    }}
+                  >
+                    {part.text}
+                  </a>
+                )
+              )}
+            </motion.div>
+          )}
+
+          {/* Render updates */}
+          <motion.div
+            className="mt-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {updates?.map((update: any, index: number) => (
+              <motion.div
+                key={update.title}
+                className="mb-6 p-6 rounded-md bg-[color:var(--card-bg-color)] shadow-lg hover:shadow-2xl transition-shadow duration-500 ease-in-out"
+                initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+              >
+                <h3
+                  className="text-lg font-bold cursor-pointer relative hover:underline"
+                  onClick={() => handleReadMore(update)}
+                  style={{
+                    color: accentColor,
+                    textDecorationColor: accentColor,
+                    textUnderlineOffset: "0.2rem",
+                    textDecorationThickness: "0.15rem",
+                  }}
+                >
+                  {update.title}
+                </h3>
+                <div className="flex items-center space-x-4 text-gray-600 mt-2">
+                  <div className="flex items-center space-x-2">
+                    <FaUser className="text-gray-500" />
+                    <p>{update.author}</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <FaCalendarAlt className="text-gray-500" />
+                    <p>{formatDate(update.datePosted)}</p>
+                  </div>
+                </div>
+                <p className="mt-2">{update.shortDescription}</p>
+                <button
+                  className="mt-4 px-4 py-2 text-sm font-semibold rounded-md text-white hover:scale-105"
+                  style={{
+                    backgroundColor: secondaryColor,
+                    textDecoration: "none",
+                  }}
+                  onClick={() => handleReadMore(update)}
+                >
+                  Read More
+                </button>
+              </motion.div>
+            ))}
+          </motion.div>
+        </>
+      )}
+    </PageSkeleton>
   );
 }
