@@ -11,8 +11,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: "/peritext",  // Matches the repository's project name on GitHub Pages
-  assetPrefix: "/peritext", // Ensures assets are correctly prefixed
+  // basePath: "/peritext",  // Matches the repository's project name on GitHub Pages
+  // assetPrefix: "/peritext", // Ensures assets are correctly prefixed
 };
 
 export default nextConfig;
