@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaUser, FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
 import PageSkeleton from "@/components/PageSkeleton";
 import { homeData } from "@/modules/HomeData";
@@ -50,16 +50,21 @@ export default function Home() {
     setSelectedUpdate(null);
   };
 
+  useEffect(() => {
+    if (!selectedUpdate) setSelectedUpdate(null);
+  }, [selectedUpdate]);
+  
+
   return (
     <PageSkeleton title="">
       {!selectedUpdate && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Bookshelf />
-        </motion.div>
+        // <motion.div
+        //   initial={{ opacity: 0 }}
+        //   animate={{ opacity: 1 }}
+        //   transition={{ duration: 0.6 }}
+        // >
+        <Bookshelf />
+        // </motion.div>
       )}
 
       {selectedUpdate ? (
