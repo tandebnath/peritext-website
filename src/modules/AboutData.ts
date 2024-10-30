@@ -8,7 +8,7 @@ export const aboutData = [
   {
     id: 2,
     type: "image",
-    src: `/peritext-website/images/about/image1.jpeg`,
+    src: `/images/about/image1.jpeg`,
     alt: "Research Presentation Image",
     align: "left",
   },
@@ -27,7 +27,7 @@ export const aboutData = [
   {
     id: 5,
     type: "image",
-    src: `/peritext-website/images/about/image2.jpeg`,
+    src: `/images/about/image2.jpeg`,
     alt: "Data Annotation Image",
     align: "right",
   },

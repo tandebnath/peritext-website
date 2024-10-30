@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from "react";
 import { FaUser, FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
 import PageSkeleton from "@/components/PageSkeleton";
@@ -6,14 +6,15 @@ import { homeData } from "@/modules/HomeData";
 import Bookshelf from "@/components/Bookshelf";
 import Heading from "@/components/Heading";
 import { motion } from "framer-motion";
+import SubHeading from "@/components/SubHeading";
 
 const accentColor = "#FF3E30";
-const secondaryColor = "#ffc720";
+const secondaryColor = "#f4b700";
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   const day = date.getDate();
-  
+
   const getDayWithSuffix = (day: number): string => {
     if (day > 3 && day < 21) return `${day}th`;
     switch (day % 10) {
@@ -27,16 +28,18 @@ const formatDate = (dateString: string): string => {
         return `${day}th`;
     }
   };
-  
+
   const dayWithSuffix = getDayWithSuffix(day);
-  const month = date.toLocaleString('default', { month: 'long' });
+  const month = date.toLocaleString("default", { month: "long" });
   const year = date.getFullYear();
   return `${dayWithSuffix} ${month}, ${year}`;
 };
 
 export default function Home() {
   const [selectedUpdate, setSelectedUpdate] = useState<any | null>(null);
-  const captionContent = homeData.find((data) => data.type === "caption")?.content;
+  const captionContent = homeData.find(
+    (data) => data.type === "caption"
+  )?.content;
   const updates = homeData.find((data) => data.type === "updates")?.updates;
 
   const handleReadMore = (update: any) => {
@@ -118,10 +121,10 @@ export default function Home() {
           {/* Render caption */}
           {captionContent && (
             <motion.div
-              className="text-2xl font-openSans font-normal leading-relaxed text-gray-700 tracking-wide"
-              initial={{ x: -100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="text-xl font-openSans font-normal leading-relaxed text-gray-700 tracking-wide"
+              // initial={{ x: -100, opacity: 0 }}
+              // animate={{ x: 0, opacity: 1 }}
+              // transition={{ duration: 0.5, ease: "easeOut" }}
             >
               {captionContent.map((part, index) =>
                 typeof part === "string" ? (
@@ -145,9 +148,31 @@ export default function Home() {
             </motion.div>
           )}
 
+          <p
+            className="text-2xl mt-10 mb-2 font-playfairDisplay text-gray-600 font-bold"
+            style={{
+              // color: secondaryColor,
+              textDecorationColor: secondaryColor,
+              textUnderlineOffset: "0.25rem",
+              textDecorationThickness: "0.125rem",
+            }}
+          >
+            Latest Updates
+          </p>
+
+          {/* <hr
+            className="my-1"
+            style={{
+              width: "2.5%",
+              borderBottom: `${0.25}rem solid ${accentColor}`,
+            }}
+          /> */}
+          {/* <motion.div className="mt-12">
+            <SubHeading text="Latest Updates" color={secondaryColor} />
+          </motion.div> */}
+
           {/* Render updates */}
           <motion.div
-            className="mt-16"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -159,7 +184,11 @@ export default function Home() {
                 initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.15,
+                  ease: "easeOut",
+                }}
               >
                 <h3
                   className="text-lg font-bold cursor-pointer relative hover:underline"

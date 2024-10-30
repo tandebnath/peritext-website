@@ -14,9 +14,9 @@ export default function Contact() {
   return (
     <PageSkeleton title="Contact Us" showLine lineColor={accentColor}>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        // initial={{ opacity: 0, y: 20 }}
+        // animate={{ opacity: 1, y: 0 }}
+        // transition={{ duration: 0.5, ease: "easeOut" }}
         className="mb-8"
       >
         <p className="mb-4 text-base leading-relaxed text-gray-700">
@@ -28,9 +28,9 @@ export default function Contact() {
         {contacts.map((contact, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 * index, ease: "easeOut" }}
+            // initial={{ opacity: 0, x: -10 }}
+            // animate={{ opacity: 1, x: 0 }}
+            // transition={{ duration: 0.4, delay: 0.2 * index, ease: "easeOut" }}
             className="border-l-4 border-[#28a7db] p-5 bg-white transition-shadow duration-300 ease-in-out flex items-start space-x-4"
           >
             <img

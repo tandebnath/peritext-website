@@ -13,9 +13,9 @@ export default function Data() {
   return (
     <PageSkeleton title="Dataset, Exploration & Visualizations" showLine lineColor={accentColor}>
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        // initial={{ opacity: 0, y: 10 }}
+        // animate={{ opacity: 1, y: 0 }}
+        // transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <p className="mb-8 text-gray-700 leading-relaxed">{body}</p>
       </motion.div>
@@ -23,9 +23,9 @@ export default function Data() {
       {/* In-progress indicator */}
       <motion.div
         className="h-[30vh] flex items-center justify-center space-x-4 mt-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        // initial={{ opacity: 0, y: 20 }}
+        // animate={{ opacity: 1, y: 0 }}
+        // transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <motion.div
           initial={{ scale: 1 }}

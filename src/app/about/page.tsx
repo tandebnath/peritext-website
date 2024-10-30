@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import PageSkeleton from "@/components/PageSkeleton";
 import { aboutData } from "@/modules/AboutData";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const accentColor = "#36aa5d";
-const secondaryColor = "#6B21A8";
 
 export default function About() {
   return (
@@ -15,25 +15,30 @@ export default function About() {
             <motion.p
               key={section.id}
               className="mb-6 text-base leading-relaxed tracking-normal"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={false} // No animation initially
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: section.id * 0.1 }}
+              viewport={{ once: true }}
             >
               {section.content}
             </motion.p>
           );
         } else if (section.type === "image") {
+          const ref = useRef(null);
+          const isInView = useInView(ref, { once: true });
+
           return (
             <motion.div
+              ref={ref}
               key={section.id}
               className={`mb-6 ${
                 section.align === "left"
                   ? "md:float-left md:mr-6"
                   : "md:float-right md:ml-6"
               } w-full md:w-1/4`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: section.id * 0.2 }}
+              initial={false} // No animation initially
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.5, delay: section.id * 0 }}
             >
               <img
                 src={section.src}
